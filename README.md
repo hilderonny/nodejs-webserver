@@ -21,7 +21,7 @@ Die Gruppe erhält anschließend nur lesenden Zugriff auf den Repository-Ordner.
 ```
 sudo adduser webserver webserver --disabled-password --disabled-login
 sudo chown -R :webserver /var/github/hilderonny/nodejs-webserver
-sudo chmod -R g-wx /var/github/hilderonny/nodejs-webserver
+sudo chmod -R g-w /var/github/hilderonny/nodejs-webserver
 ```
 
 ## Installation
