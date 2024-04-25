@@ -56,6 +56,13 @@ WorkingDirectory=/var/github/hilderonny/nodejs-webserver/
 WantedBy=multi-user.target
 ```
 
+Webserver Bindugnsrechte an Port 80 vergeben
+
+```
+sudo apt install libcap2-bin
+sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``
+```
+
 Hintergrunddienst registrieren und starten
 
 ```
