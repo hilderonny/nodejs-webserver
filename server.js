@@ -27,6 +27,10 @@ const app = express()
 // Statische Dateien aus einem bestimmten Verzeichnis bedienen
 app.use(express.static(STATIC_DIR));
 
+// APIs einbinden
+app.use('/api/filesystem', require('./api/filesystem'))
+
+
 // Erstellen Sie einen HTTP-Server (für die Umleitung)
 http.createServer((req, res) => {
 	res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url })

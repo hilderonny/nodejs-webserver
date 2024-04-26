@@ -44,17 +44,27 @@ ExecStart=/usr/bin/node /var/github/hilderonny/nodejs-webserver/server.js
 Restart=always
 User=webserver
 Environment=PATH=/usr/bin:/usr/local/bin
-Environment=NODE_ENV=production
 Environment=HTTP_PORT=80
 Environment=HTTPS_PORT=443
 Environment=CER_FILE=/etc/certificate.cer
 Environment=KEY_FILE=/etc/certificate.key
 Environment=STATIC_DIR=/var/www
+Environment=FILESYSTEM_ROOT_DIR=/var/files
 WorkingDirectory=/var/github/hilderonny/nodejs-webserver/
 
 [Install]
 WantedBy=multi-user.target
 ```
+
+|Umgebungsvariable|Beschreibung|
+|---|---|
+|PATH|Pfad, in welchen nach `node` gesucht wird|
+|HTTP_PORT|HTTP Port, an dem der Server lauschen soll (80)|
+|HTTPS_PORT|HTTPS Port, an dem der Server lauschen soll (443)|
+|CER_FILE|Vollständiger Pfad der SSL-Zertifikatsdatei (Identität)|
+|KEY_FILE|Vollständiger Pfad zum public key des SSL Zertifikats|
+|STATIC_DIR|Pfad zu den statischen HTML-Seiten|
+|FILESYSTEM_ROOT_DIR|Stammverzeichnis, welches für die `filesystem` API verwendet wird|
 
 Webserver Bindugnsrechte an Port 80 vergeben
 
