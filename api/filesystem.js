@@ -6,6 +6,13 @@ const upload = multer()
 
 const FILESYSTEM_ROOT_DIR = process.env.FILESYSTEM_ROOT_DIR
 
+function createPath(p) {
+    if (fs.existsSync(p)) return;
+    const parentPath = path.dirname(p);
+    createPath(parentPath);
+    fs.mkdirSync(p);
+}
+
 const apiRouter = express.Router()
 
 // Verzeichnisinhalt auflisten
@@ -39,6 +46,7 @@ apiRouter.get('/*', (req, res) => {
 // Datei oder Verzeichnis löschen
 apiRouter.delete('/*', (req, res) => {
     const fullPath = path.resolve(FILESYSTEM_ROOT_DIR, req.params[0])
+    console.log("Deleting " + fullPath)
     fs.rm(fullPath, {force: true, recursive: true}, (err) => {
         if (err) {
             res.status(500).send(err)
@@ -51,6 +59,7 @@ apiRouter.delete('/*', (req, res) => {
 // Verzeichnis anlegen
 apiRouter.post('/folder/*', (req, res) => {
     const fullPath = path.resolve(FILESYSTEM_ROOT_DIR, req.params[0])
+    console.log("Creating folder " + fullPath)
     createPath(fullPath)
     res.status(200).send('ok')
 })
@@ -58,8 +67,10 @@ apiRouter.post('/folder/*', (req, res) => {
 // Datei speichern
 apiRouter.post('/*', upload.any(), (req, res) => {
     const fullPath = path.resolve(FILESYSTEM_ROOT_DIR, req.params[0])
+    console.log("Saving file " + fullPath)
     createPath(path.dirname(fullPath))
-    fs.writeFile(fullPath, req.files[0].buffer, (err) => {
+    const content = req.files ? req.files[0].buffer : ""
+    fs.writeFile(fullPath, content, (err) => {
         if (err) {
             res.status(500).send(err)
         } else {

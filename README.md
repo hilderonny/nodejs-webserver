@@ -51,6 +51,8 @@ Environment=KEY_FILE=/etc/certificate.key
 Environment=STATIC_DIR=/var/www
 Environment=FILESYSTEM_ROOT_DIR=/var/files
 WorkingDirectory=/var/github/hilderonny/nodejs-webserver/
+StandardOutput=syslog
+SyslogIdentifier=webserver
 
 [Install]
 WantedBy=multi-user.target
